@@ -1,9 +1,13 @@
 package com.codepath.apps.restclienttemplate
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -68,6 +72,54 @@ class TimelineActivity : AppCompatActivity() {
         populateHomeTimeline()
     }
 
+    //TODO
+    //Inflating the menu resource file we want to use
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean{
+        //Inflate the right menu resource file
+        menuInflater.inflate(R.menu.menu_main,menu)
+        //If we return false then the menu will not be shown
+        return true
+    }
+    //TODO
+    //Handles what we actually do when clicked on menu item
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //refer back to the icon with the id we give to it
+        if(item.itemId == R.id.compose){
+            //Navigating to the compose screen
+            val intent = Intent(this, ComposeActivity::class.java)
+            //Instead of just doing startActivity(intent), we want to use a function
+                //that gives back a result. The request code can be initialized to anything we want.
+                //Just make sure you use the same code for the activity you want the user to come from.
+            startActivityForResult(intent,REQUEST_CODE)
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    //This method is called when we come back from ComposeActivity (aka after finish())
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
+
+        //REQUEST_CODE is defined in the companion object
+        //The request code makes sure that we are coming back from ComposeActivity
+        if(resultCode == RESULT_OK && requestCode == REQUEST_CODE){
+            //If we are coming back from the ComposeActivity, then get that tweet
+            //Everything is passed back through the data object so we need to get that data object
+            //data? because sometimes the intent is empty so pass safe check
+            val tweet = data?.getParcelableExtra<Tweet>("tweet") as Tweet
+            //Update timeline by adding new tweet to existing list of tweets
+            //Modifying the data source of tweets
+            tweets.add(0,tweet)
+            //update adapter
+            adapter.notifyItemInserted(0)
+            //Add something so that we dont have to personally scroll to see tweet
+            rvTweets.smoothScrollToPosition(0)
+        }
+
+        //At the very end, we still want android to handle whatever is at the end of
+        //onActivityResult
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     //Utilize the twitter client to actually populate the timeline
     fun populateHomeTimeline(){
         //Calling the method in TwitterClient.kt
@@ -117,5 +169,7 @@ class TimelineActivity : AppCompatActivity() {
 
     companion object{
         val TAG="TimelineActivity"
+        //for startActivtyForResult
+        val REQUEST_CODE=10
     }
 }

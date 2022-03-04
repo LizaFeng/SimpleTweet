@@ -8,7 +8,7 @@ import com.github.scribejava.apis.FlickrApi
 import com.github.scribejava.apis.TwitterApi
 import com.github.scribejava.core.builder.api.BaseApi
 
-/*
+/* Getting twitter calls
  *
  * This is the object responsible for communicating with a REST API.
  * Specify the constants below to change the API being communicated with.
@@ -53,6 +53,7 @@ class TwitterClient(context: Context) : OAuthBaseClient(
 
     // DEFINE METHODS for different API endpoints here
     fun getHomeTimeline(handler: JsonHttpResponseHandler) {
+        //Getting back a list of tweet objects based on the accounts you follow
         val apiUrl =
             getApiUrl("statuses/home_timeline.json")
 
@@ -65,6 +66,20 @@ class TwitterClient(context: Context) : OAuthBaseClient(
             //But once we start adding the pull refresh feature, this would change.
         params.put("since_id", 1)
         client.get(apiUrl, params, handler)
+    }
+
+    // Writing data into twitter
+    fun publishTweet(tweetContent: String, handler: JsonHttpResponseHandler) {
+        //Getting back a list of tweet objects based on the accounts you follow
+        val apiUrl =
+            getApiUrl("statuses/update.json")
+
+        // Can specify query string params directly or through RequestParams.
+        val params = RequestParams()
+        //Count tells the app how much of the records to retrieve
+        params.put("status", tweetContent)
+        //Write and change data
+        client.post(apiUrl, params, "", handler)
     }
 
     /* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint

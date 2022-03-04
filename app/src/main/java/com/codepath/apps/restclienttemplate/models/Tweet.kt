@@ -1,19 +1,24 @@
 package com.codepath.apps.restclienttemplate.models
 
+import android.os.Parcelable
 import com.codepath.apps.restclienttemplate.TweetsAdapter
+import kotlinx.android.parcel.Parcelize
 import org.json.JSONArray
 import org.json.JSONObject
 
-class Tweet {
+//Making this class parcelable (First by annotating the class with @Parcelize)
+@Parcelize
+//After making the class parcelable, move the variables into constructor
+//Parcelable instead of Parcelize because Parcelable is the type that android knows how to
+    //pass around.
+class Tweet(var body: String= "", var createdAt: String = "",
+            var user: User? = null, var time_stamp: String = ""): Parcelable{
 
-    //We want to display the tweet body
-    var body: String= ""
-    //We want to display when the tweet was born into the world
-    var createdAt: String = ""
-    //We want to display who created the tweet.
-    var user: User? = null
-    //For TimeStamp: We want to display the time stamp
-    var time_stamp: String = ""
+//explanations for variables in constructor
+    //body is tweet body
+    //createdAt is when the tweet was born into the world
+    //user is who created the tweet.
+    //time_stamp is for TimeStamp: We want to display the time stamp
 
     //Similar to User.kt, we want to have a companion object where we would have a function that actually allows us
         //to pass in a json object and turn that into a tweet object we can use

@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    //Extra plugin to parcelize own objects
+    id 'kotlin-parcelize'
 
 }
 
