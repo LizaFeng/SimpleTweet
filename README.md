@@ -62,7 +62,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
     limitations under the License.
  
  
-## User Stories
+## User Stories for part 2
 
 The following **required** functionality is completed:
 
