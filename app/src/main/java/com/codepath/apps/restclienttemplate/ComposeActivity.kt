@@ -69,7 +69,7 @@ class ComposeActivity : AppCompatActivity() {
                 //Look into displaying SnackBar message (snackbar will show the message to the user for a few seconds)
             }
             //2. Make sure the tweet is under character count
-            if (tweetContent.length > 140){
+            if (tweetContent.length > 280){
                 Toast.makeText(this, "Tweet is too long! Limit is 140 characters", Toast.LENGTH_SHORT)
                     .show()
             }else{
