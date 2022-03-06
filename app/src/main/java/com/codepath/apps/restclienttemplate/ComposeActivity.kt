@@ -51,9 +51,9 @@ class ComposeActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable) {
                 // Fires right after the text has changed
                 //tvCharCounter.setText(s.count())
-                tvCharCounter.setText((s.toString().length).toString())
+                tvCharCounter.setText((280-(s.toString().length)).toString())
             }
-        })
+        })a,
 
         //We need to do something when the user clicks on the tweet button
             //so we need to set an onClickListener
